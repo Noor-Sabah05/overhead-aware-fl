@@ -1,0 +1,101 @@
+{
+  "config": {
+    "name": "short",
+    "subset": 10000,
+    "subset_seed": 12345,
+    "clients": 4,
+    "alpha": 0.5,
+    "rounds": 10,
+    "epochs": 2,
+    "batch": 64,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "threads": [
+      1,
+      2,
+      4
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "pilot_seeds": [
+      100,
+      101,
+      102
+    ],
+    "pilot_examples": 2500,
+    "methods": [
+      "max_fixed",
+      "pilot_fixed",
+      "reactive",
+      "paired_ungated",
+      "proposed"
+    ],
+    "conditions": [
+      "none",
+      "steady",
+      "intermittent"
+    ],
+    "pilot_conditions": [
+      "none",
+      "steady",
+      "compute"
+    ],
+    "interference_mb": 64,
+    "period_s": 10,
+    "on_s": 5,
+    "probe_batches": 2,
+    "probe_every": 4,
+    "horizon_epochs": 4,
+    "min_gain": 0.05,
+    "payback_factor": 1.25,
+    "schedule_seed": 20261107
+  },
+  "dataset": {
+    "subset": 10000,
+    "subset_seed": 12345,
+    "normalization": {
+      "mean": 0.286,
+      "std": 0.353
+    },
+    "source_sha256": {
+      "train-images-idx3-ubyte.gz": "3aede38d61863908ad78613f6a32ed271626dd12800ba2636569512369268a84",
+      "train-labels-idx1-ubyte.gz": "a04f17134ac03560a47e3764e11b92fc97de4d1bfaf8ba1a3aa29af54cc90845",
+      "t10k-images-idx3-ubyte.gz": "346e55b948d973a97e58d2351dde16a484bd415d4595297633bb08f03db6a073",
+      "t10k-labels-idx1-ubyte.gz": "67da17c76eaffca5446c3361aaab5c3cd6d1c2608764d35dfb1850b086bf8dd5"
+    },
+    "sha256": "94757645c4bd103500d10edcfaa5e80812b30d519fb29c2e50d24205de406d5c",
+    "file": "fashion-0fa6a18b401a3ed0.npz",
+    "test_examples": 10000
+  },
+  "source_sha256": {
+    "controllers.py": "5d84d8c0894a799cc2896cfa2dc5516548bb01b4ff2b58b2ad1dc9d135550236",
+    "core.py": "f1d02af490cb98cac6b017cf4ce26c7bb7c937419d842b96fd64226bbc3edfb1",
+    "experiment.py": "c75a1bd729889a3aadfe866570d3f0eca060dc35de5d3bea7b1721e102dd740a",
+    "workers.py": "63df416a601d95821c48428ecf45ed3da9bfc32ccb0d81c852d14eab182ad400"
+  },
+  "environment": {
+    "cpu": "Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz",
+    "physical_cores": 8,
+    "logical_cores": 16,
+    "ram_gib": 32.0,
+    "platform": "macOS-26.5-x86_64-i386-64bit",
+    "python": "3.12.14",
+    "torch": "2.2.2",
+    "numpy": "1.26.4",
+    "affinity": "not pinned",
+    "device": "CPU",
+    "hardware_counters": false,
+    "power_settings": "not controlled or recorded",
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "experiment_id": "17670b7cc3bed56fa9192c457394a9bdf70338ab1e8137f2525f6c5c9af385df",
+  "created_utc": "2026-11-07T14:52:26.507877+00:00"
+}

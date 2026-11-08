@@ -1,0 +1,88 @@
+{
+  "experiment_id": "17670b7cc3bed56fa9192c457394a9bdf70338ab1e8137f2525f6c5c9af385df",
+  "method": "reactive",
+  "condition": "none",
+  "seed": 2,
+  "total_s": 55.58108666300541,
+  "train_s": 34.26144623695291,
+  "epoch_wall_s": 34.50590553389338,
+  "eval_s": 14.131137030999525,
+  "controller_s": 0.0005164319736650214,
+  "probe_s": 0,
+  "probe_count": 0,
+  "accepted_probes": 0,
+  "probe_examples": 0,
+  "thread_changes": 48,
+  "initial_threads": 4,
+  "train_examples": 200000,
+  "examples_per_s": 3598.346344191204,
+  "final_accuracy": 0.8396,
+  "checkpoint_sha256": "e8139297e49098112f8b734a748e96201c652f7ad2ad88f0078ffb82a3f5a88b",
+  "rounds": [
+    {
+      "round": 1,
+      "accuracy": 0.6052,
+      "eval_wall_s": 1.4756226260069525,
+      "round_wall_s": 4.615462949994253
+    },
+    {
+      "round": 2,
+      "accuracy": 0.7534,
+      "eval_wall_s": 1.4907490420009708,
+      "round_wall_s": 5.02466939498845
+    },
+    {
+      "round": 3,
+      "accuracy": 0.7927,
+      "eval_wall_s": 1.38448303900077,
+      "round_wall_s": 4.958034997995128
+    },
+    {
+      "round": 4,
+      "accuracy": 0.7849,
+      "eval_wall_s": 1.4092962310096482,
+      "round_wall_s": 4.520816217001993
+    },
+    {
+      "round": 5,
+      "accuracy": 0.8121,
+      "eval_wall_s": 1.381873389997054,
+      "round_wall_s": 4.985717784991721
+    },
+    {
+      "round": 6,
+      "accuracy": 0.8205,
+      "eval_wall_s": 1.379407833010191,
+      "round_wall_s": 5.035421791995759
+    },
+    {
+      "round": 7,
+      "accuracy": 0.8148,
+      "eval_wall_s": 1.4123025269946083,
+      "round_wall_s": 4.661070301008294
+    },
+    {
+      "round": 8,
+      "accuracy": 0.83,
+      "eval_wall_s": 1.4273622009932296,
+      "round_wall_s": 5.13710647400876
+    },
+    {
+      "round": 9,
+      "accuracy": 0.8291,
+      "eval_wall_s": 1.3867640659882454,
+      "round_wall_s": 5.264984341003583
+    },
+    {
+      "round": 10,
+      "accuracy": 0.8396,
+      "eval_wall_s": 1.3832760759978555,
+      "round_wall_s": 4.479951857007109
+    }
+  ],
+  "thread_histogram": {
+    "1": 0,
+    "2": 24,
+    "4": 56
+  }
+}
