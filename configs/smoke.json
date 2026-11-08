@@ -1,0 +1,46 @@
+{
+  "name": "smoke",
+  "subset": 1000,
+  "subset_seed": 12345,
+  "clients": 4,
+  "alpha": 0.5,
+  "rounds": 1,
+  "epochs": 1,
+  "batch": 64,
+  "lr": 0.01,
+  "momentum": 0.9,
+  "threads": [
+    1,
+    2,
+    4
+  ],
+  "seeds": [
+    0
+  ],
+  "pilot_seeds": [
+    100
+  ],
+  "pilot_examples": 500,
+  "methods": [
+    "max_fixed",
+    "pilot_fixed",
+    "reactive",
+    "paired_ungated",
+    "proposed"
+  ],
+  "conditions": [
+    "none"
+  ],
+  "pilot_conditions": [
+    "none"
+  ],
+  "interference_mb": 64,
+  "period_s": 10,
+  "on_s": 5,
+  "probe_batches": 2,
+  "probe_every": 4,
+  "horizon_epochs": 4,
+  "min_gain": 0.05,
+  "payback_factor": 1.25,
+  "schedule_seed": 20261107
+}
