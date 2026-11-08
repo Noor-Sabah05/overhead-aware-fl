@@ -1,6 +1,6 @@
 # Phase 3 CPU thread adaptation in federated learning
 
-The final implementation is in this folder. The supplied `lab/` code, draft report and old results are preserved as historical inputs. New measurements are never combined with old measurements.
+The implementation is in `src/`, configurations in `configs/`, correctness checks in `tests/`, and existing measurements in `results/`. Dataset downloads and caches use `dataset/`.
 
 ## Completed evaluation
 
@@ -14,42 +14,42 @@ The supplied report uses `results/short`: **45/45 runs**, 10,000 training images
 
 The proposed policy accepted **zero of 180 candidate probes**. The payback gate rejected zero candidates that passed the gain threshold; all candidates failed the gain test. Therefore these results do not demonstrate an adaptive-thread or payback-gate speedup. The intermittent timing advantage is reported as an observation, with substantial host/runtime variability and load-phase exposure as limitations. Identical fixed settings also produced different timings.
 
-The contribution claim is the implemented matched-probe controller, its explicit heuristic and ablation, and the reproducible empirical study—not a first-ever scheduler or a proven performance advantage. See [the report](report/phase3_report.docx), [PDF](report/phase3_report.pdf), and [viva walkthrough](WALKTHROUGH.md).
+The contribution claim is the implemented matched-probe controller, its explicit heuristic and ablation, and the reproducible empirical study—not a first-ever scheduler or a proven performance advantage.
 
 ## Open in VS Code
 
-Open the **pdc project** folder. Select `.venv/bin/python` with **Python: Select Interpreter**. The supplied launch configuration runs the smoke experiment. Use the integrated terminal for the longer experiments.
+Open the **overhead-aware-fl** folder. Select your virtual environment with **Python: Select Interpreter**. Run the commands below from the repository root.
 
 ## Setup on macOS or Linux
 
-Use Python **3.10–3.12**; the pinned PyTorch 2.2.2 environment supports this Intel Mac. Do not use the Linux virtual environment shipped inside `lab/`.
+Use Python **3.10–3.12**; the pinned PyTorch 2.2.2 environment supports this Intel Mac. Create a local virtual environment for your machine.
 
 ```bash
-cd "/Users/admin/Desktop/pdc project"
+cd /path/to/overhead-aware-fl
 python3.12 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r phase3/requirements.txt
-python phase3/experiment.py check
-python -m unittest discover -s phase3/tests -v
+python -m pip install -r requirements.txt
+python src/experiment.py check
+python -m unittest discover -s tests -v
 ```
 
-If Python 3.12 has another executable name, substitute it in the first command. An existing environment prepared in this workspace can simply be activated; no reinstall is needed. `PYTHON_BIN=python3.11 bash phase3/setup.sh` is an alternative installer. On Windows use `py -3.12 -m venv .venv` and `.venv\Scripts\Activate.ps1` in PowerShell; run the same `python` commands afterward.
+If Python 3.12 has another executable name, substitute it in the first command. An existing environment prepared in this workspace can simply be activated; no reinstall is needed. `PYTHON_BIN=python3.11 bash setup.sh` is an alternative installer. On Windows use `py -3.12 -m venv .venv` and `.venv\Scripts\Activate.ps1` in PowerShell; run the same `python` commands afterward.
 
 ## Run
 
 ```bash
 # Small REAL-data correctness smoke experiment: 5 methods, one seed, no load.
-python phase3/experiment.py all --config phase3/configs/smoke.json --out phase3/results/my-smoke
+python src/experiment.py all --config configs/smoke.json --out results/my-smoke
 
 # Short research matrix: 10,000 examples, 10 rounds, 3 seeds, 5 methods × 3 loads = 45 runs.
-python phase3/experiment.py all --config phase3/configs/short.json --out phase3/results/my-short
+python src/experiment.py all --config configs/short.json --out results/my-short
 
 # Original 20-round budget, same 45-run matrix.
-python phase3/experiment.py all --config phase3/configs/full.json --out phase3/results/my-full
+python src/experiment.py all --config configs/full.json --out results/my-full
 
 # Regenerate tables and plots without retraining.
-python phase3/experiment.py analyze --out phase3/results/my-short
-python phase3/make_figures.py
+python src/experiment.py analyze --out results/my-short
+python src/make_figures.py
 ```
 
 `validation.json` is an explicitly smaller evaluation with 3,000 training examples and 3 rounds. It is a pipeline diagnostic, not equivalent to the 10-round configuration. The final report identifies its actual input run directory and configuration. Never relabel a smoke/validation run as the full experiment.
@@ -79,7 +79,7 @@ Repeat exactly the same command. Completed runs with matching configuration, cod
 | `paired_ungated` | Same matched probes as proposed, ≥5% gain threshold, no cost-payback requirement. |
 | `proposed` | Matched ABBA/BAAB microprobes, ≥5% gain and predicted savings exceeding 1.25× measured probing cost over at most four remaining local epochs. |
 
-Both paired controllers start at the pilot winner. Every fourth local epoch they compare the incumbent with an adjacent count on the same first two minibatches, restoring the same model and momentum before every probe. Four probe calls use ABBA, alternating with BAAB. Probe weights are discarded. Real training runs exactly once afterward. The gain/payback rule is in `controllers.py`; all decisions and inputs are logged. This is an experimental heuristic: probe cost is already spent at acceptance time, so rejecting a faster candidate does not recover that cost. The report discusses moving cost control before probing as future work. Thread-dependent floating-point reduction differences remain possible despite identical work.
+Both paired controllers start at the pilot winner. Every fourth local epoch they compare the incumbent with an adjacent count on the same first two minibatches, restoring the same model and momentum before every probe. Four probe calls use ABBA, alternating with BAAB. Probe weights are discarded. Real training runs exactly once afterward. The gain/payback rule is in `src/controllers.py`; all decisions and inputs are logged. This is an experimental heuristic: probe cost is already spent at acceptance time, so rejecting a faster candidate does not recover that cost. The report discusses moving cost control before probing as future work. Thread-dependent floating-point reduction differences remain possible despite identical work.
 
 ## Result files
 
@@ -102,15 +102,6 @@ The implemented course contribution is a matched-probe thread controller with a 
 
 ## Files to read
 
-Start with `experiment.py` for orchestration, `controllers.py` for the contribution, `workers.py` for process execution, and `core.py` for the unchanged learning workload. `tests/test_pipeline.py` checks partition coverage, sample-weighted aggregation, payback decisions, momentum preservation, probe isolation and incompatible resume rejection. `analyze.py` verifies paired batch-order hashes and equal real training work before making tables. `report/` holds the written Phase 3 deliverable; `research/` retains the literature search and verification notes.
+Start with `src/experiment.py` for orchestration, `src/controllers.py` for the contribution, `src/workers.py` for process execution, and `src/core.py` for the unchanged learning workload. `tests/test_pipeline.py` checks partition coverage, sample-weighted aggregation, payback decisions, momentum preservation, probe isolation and incompatible resume rejection. `src/analyze.py` verifies paired batch-order hashes and equal real training work before making tables.
 
-## Rebuild the written report
-
-After a complete matrix and analysis:
-
-```bash
-python phase3/make_figures.py
-python phase3/build_report.py --results phase3/results/my-short --output phase3/report/my_report.docx
-```
-
-This creates an editable Word report and a Markdown counterpart, filling numerical tables and conclusions from the specified results. The final supplied Word report is also visually checked through PDF rendering. The report builder assumes the five-method, three-condition design in `short.json`/`full.json`; use those configurations for the submission report.
+Existing result manifests retain their original source hashes. Because file paths changed during reorganization, use a new output directory for future experiments; existing results remain available for analysis. Architecture figures generated by `src/make_figures.py` are saved to `results/short/analysis/`.

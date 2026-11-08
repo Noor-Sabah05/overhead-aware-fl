@@ -1,0 +1,7 @@
+# This environment uses torch 2.2.2, verified on the project Intel Mac.
+# Use Python 3.10, 3.11, or 3.12 (not 3.13+ for this pinned environment).
+torch==2.2.2
+numpy==1.26.4
+matplotlib==3.9.4
+psutil==6.1.1
+python-docx==1.1.2
